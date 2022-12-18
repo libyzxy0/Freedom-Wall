@@ -132,8 +132,6 @@ body {
     </div>
     
     <script>
-"use-strict";
-//Page Function
 var btnMenu = document.querySelector(".btn_menu");
 var btnMenuOpened = document.querySelector(".btn_menu_opened");
 var menu = document.querySelector(".menu");
@@ -148,7 +146,6 @@ btnMenuOpened.addEventListener("click", function() {
   menu.style.display="none";
 });
 
-//Main Function
 let messagesArray = <%-JSON.stringify(messages) %>
 
 function createMessage(que) {
@@ -168,4 +165,3 @@ for(let i = 0;i < messagesArray.length;i++) {
 </script>
 </body>
 </html>
-49
