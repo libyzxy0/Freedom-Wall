@@ -9,7 +9,7 @@
 </head>
 <body>
 	<style>
-	@import url('https://fonts.googleapis.com/css2?family=Nerko+One&family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nerko+One&family=Poppins:wght@300&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -87,93 +87,33 @@ body {
 .menu ul li a:hover {
     color: #8083ff;
 }
-.message-area {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 2.5rem;
-    text-align: center;
-    padding-bottom: 7rem;
-    background-color: white;
-}
-.message-area input[type=text] {
-    width: 90%;
-    padding-left: 5%;
-    padding-right: 15%;
-    outline: none;
-    border: none;
-    border-radius: 6px;
-    height: 2.5rem;
-    font-size: 15px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    color: #a9a9a9;
-    transition: 0.3s;
-}
-.message-area input[type=text]::placeholder {
-    color: #BAC3CD;
-}
-.message-area button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0.6rem 10%;
-    border: none;
-    background: transparent;
-    font-size: 22px;
-    color: #BAC3CD;
-}
-.banner {
-    background: #ffffff;
-    width: 90%;
-    height: 12rem;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    border-radius: 12px;
-    margin-top: 6rem;
-}
-.banner h1 {
-    color: #BAC3CD;
-    text-align: center;
-    font-size: 22px;
-    margin-top: 2.5rem;    
-    font-family: 'Nerko One', cursive;
-}
-.banner p {
-    text-align: center;
-    font-size: 14px;
-    color: #BAC3CD;
-    margin: 1rem 0.5rem;
-    font-family: 'Poppins', sans-serif;
-}
 
-.goToFeed {
-    width: 100%;
-    height: 3rem;
-    margin-top: 2rem;
+.messages {
+    margin-top: 5rem;
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    margin-bottom: 5rem;
 }
-.goToFeed button {
-    border: none;
-    background: white;
+.messages .message-card {
+    background-color: #ffffff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    margin-top: 3rem;
     width: 90%;
-    height: 2.3rem;
-    font-weight: 400;
-    font-size: 18px;
     border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    transition: 0.5s;
-    color: #BAC3CD;
+    display: flex;
+    justify-content: center;
+    
 }
-.goToFeed button:hover {
-    opacity: 0.7;
+.messages .message-card p {
+    color: #8083ff;
+    padding: 1.5rem 1.5rem;
+    font-family: 'Nerko One', cursive;
 }
 
-	</style>
-
+</style>
     <div class="nav">
         <h1>Freedom Wall</h1>
         <i class="ri-menu-3-line btn_menu"></i>
@@ -188,26 +128,11 @@ body {
         </ul>
     </div>
     <div class="center">
-    <div class="banner">
-        <h1>Hi there, <%= name %> Welcome to FreedomWall</h1>
-        <p>I hope you enjoy reading someone's messages here!</p>
-    </div>
+        <div class="messages" id="messages-container"></div>
     </div>
     
-    
-    <div class="goToFeed">
-        <button onclick="window.location.href='/feed'">Feed</button>
-    </div>
-    
-    
-    <div class="message-area">
-        <form action="/upload" method="post">
-        <input type="text" id="message" name="message" placeholder="Enter a message." autocomplete="off">
-        <button type="submit"><i class="ri-send-plane-fill"></i></button>
-        </form>
-    </div>
     <script>
-    	"use-strict";
+"use-strict";
 //Page Function
 var btnMenu = document.querySelector(".btn_menu");
 var btnMenuOpened = document.querySelector(".btn_menu_opened");
@@ -222,6 +147,25 @@ btnMenuOpened.addEventListener("click", function() {
   btnMenuOpened.style.display="none";
   menu.style.display="none";
 });
+
+//Main Function
+let messagesArray = <%-JSON.stringify(messages) %>
+
+function createMessage(que) {
+    let messagesContainer = document.getElementById("messages-container");
+    var messageCard = document.createElement("div");
+    messageCard.classList="message-card";
+    messagesContainer.appendChild(messageCard);
+    var text = document.createElement("p");
+    text.innerHTML=que;
+    messageCard.appendChild(text);
+}
+for(let i = 0;i < messagesArray.length;i++) {
+    createMessage(messagesArray[i])
+}
+
+
 </script>
 </body>
 </html>
+49
